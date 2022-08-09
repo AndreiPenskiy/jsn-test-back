@@ -8,11 +8,15 @@ const getAll = async (req, res, next) => {
       skip,
       limit: +limit,
     });
+
+    const totalDocuments = await Hero.countDocuments({});
+
     res.json({
       status: "success",
       code: 200,
       data: {
         result: superheros,
+        heroCount: totalDocuments,
       },
     });
   } catch (error) {

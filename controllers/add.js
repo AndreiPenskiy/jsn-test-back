@@ -1,9 +1,11 @@
 const { Hero } = require("../models/superheroes");
+const fs = require('fs/promises');
+const path = require('path');
 
+const imagesDir = path.join(__dirname, '../', 'public', 'image');
 
 const addHero = async (req, res, next) => {
   const { body } = req;
- // const nickname = body.nickname;
 
   try {
     const newHero = {
@@ -15,7 +17,11 @@ const addHero = async (req, res, next) => {
     };
 
     if (req.file) {
-      newHero.image = req.file.path;
+      const { path: tempUpload, originalname } = req.file
+      const resultUpload = path.join(imagesDir, originalname)
+      fs.rename(tempUpload, resultUpload)
+      
+      newHero.image = path.join('image', originalname)
     }
 
     const createdHero = await Hero.create(newHero);
