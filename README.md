@@ -1,7 +1,9 @@
 # jsn-test-back
 
 run app:
+
 1)npm i 
+
 2)npm start
 
 @POST http://localhost:3001/api/superheroes/ - add hero
